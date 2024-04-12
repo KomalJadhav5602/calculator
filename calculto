@@ -1,0 +1,296 @@
+######################___Main_Acitivity_xml_file___################################
+
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tvResult"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:gravity="right"
+        android:textSize="24sp"
+        android:textColor="@android:color/black"
+        android:text="0"
+        android:background="@android:color/white"/>
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvResult"
+        android:layout_marginTop="16dp"
+        android:columnCount="4">
+
+        <!-- Number Buttons -->
+        <Button
+            android:id="@+id/btn1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:text="1"/>
+
+        <Button
+            android:id="@+id/btn2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:text="2"/>
+
+        <Button
+            android:id="@+id/btn3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:text="3"/>
+
+        <Button
+            android:id="@+id/btnPlus"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:text="+"/>
+
+        <Button
+            android:id="@+id/btn4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:text="4"/>
+
+        <Button
+            android:id="@+id/btn5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:text="5"/>
+
+        <Button
+            android:id="@+id/btn6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:text="6"/>
+
+        <Button
+            android:id="@+id/btnMinus"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:text="-"/>
+
+        <Button
+            android:id="@+id/btn7"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:text="7"/>
+
+        <Button
+            android:id="@+id/btn8"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:text="8"/>
+
+        <Button
+            android:id="@+id/btn9"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:text="9"/>
+
+        <Button
+            android:id="@+id/btnMultiply"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:text="*"/>
+
+        <Button
+            android:id="@+id/btnDecimal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:text="."/>
+
+        <Button
+            android:id="@+id/btn0"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:text="0"/>
+
+        <Button
+            android:id="@+id/btnEquals"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:text="="/>
+
+        <Button
+            android:id="@+id/btnDivide"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:text="/"/>
+        <Button
+            android:id="@+id/btnClear"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="2"
+            android:layout_columnWeight="2"
+            android:text="C"/>
+
+    </GridLayout>
+
+</RelativeLayout>
+
+
+####################################____Main_Acitivity_Java_file___#####################################
+package com.example.mycalculato;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import java.text.DecimalFormat;
+
+public class MainActivity extends AppCompatActivity {
+
+    TextView tvResult;
+    StringBuilder currentNumber;
+    double result;
+    char lastOperator;
+    boolean isOperatorClicked;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        tvResult = findViewById(R.id.tvResult);
+        currentNumber = new StringBuilder();
+        result = 0;
+        lastOperator = '=';
+        isOperatorClicked = false;
+
+        // Number Buttons
+        Button btn0 = findViewById(R.id.btn0);
+        Button btn1 = findViewById(R.id.btn1);
+        Button btn2 = findViewById(R.id.btn2);
+        Button btn3 = findViewById(R.id.btn3);
+        Button btn4 = findViewById(R.id.btn4);
+        Button btn5 = findViewById(R.id.btn5);
+        Button btn6 = findViewById(R.id.btn6);
+        Button btn7 = findViewById(R.id.btn7);
+        Button btn8 = findViewById(R.id.btn8);
+        Button btn9 = findViewById(R.id.btn9);
+        Button btnDecimal = findViewById(R.id.btnDecimal);
+
+        // Operator Buttons
+        Button btnPlus = findViewById(R.id.btnPlus);
+        Button btnMinus = findViewById(R.id.btnMinus);
+        Button btnMultiply = findViewById(R.id.btnMultiply);
+        Button btnDivide = findViewById(R.id.btnDivide);
+        Button btnEquals = findViewById(R.id.btnEquals);
+
+        // Clear Button
+        Button btnClear = findViewById(R.id.btnClear);
+
+        // Set OnClickListener for each button
+        View.OnClickListener numberClickListener = v -> {
+            Button button = (Button) v;
+            if (isOperatorClicked) {
+                currentNumber.setLength(0);
+                isOperatorClicked = false;
+            }
+            currentNumber.append(button.getText().toString());
+            tvResult.append(button.getText().toString());
+        };
+
+        btn0.setOnClickListener(numberClickListener);
+        btn1.setOnClickListener(numberClickListener);
+        btn2.setOnClickListener(numberClickListener);
+        btn3.setOnClickListener(numberClickListener);
+        btn4.setOnClickListener(numberClickListener);
+        btn5.setOnClickListener(numberClickListener);
+        btn6.setOnClickListener(numberClickListener);
+        btn7.setOnClickListener(numberClickListener);
+        btn8.setOnClickListener(numberClickListener);
+        btn9.setOnClickListener(numberClickListener);
+        btnDecimal.setOnClickListener(v -> {
+            if (!currentNumber.toString().contains(".")) {
+                currentNumber.append(".");
+                tvResult.append(".");
+            }
+        });
+
+        View.OnClickListener operatorClickListener = v -> {
+            Button button = (Button) v;
+            if (!isOperatorClicked) {
+                double currentValue = Double.parseDouble(currentNumber.toString());
+                performOperation(currentValue);
+                lastOperator = button.getText().charAt(0);
+                currentNumber.setLength(0);
+                currentNumber.append(result);
+                tvResult.append(button.getText().toString());
+                isOperatorClicked = true;
+            } else {
+                lastOperator = button.getText().charAt(0);
+                tvResult.setText(tvResult.getText().subSequence(0, tvResult.getText().length() - 1) + button.getText().toString());
+            }
+        };
+
+        btnPlus.setOnClickListener(operatorClickListener);
+        btnMinus.setOnClickListener(operatorClickListener);
+        btnMultiply.setOnClickListener(operatorClickListener);
+        btnDivide.setOnClickListener(operatorClickListener);
+
+        btnEquals.setOnClickListener(v -> {
+            if (!isOperatorClicked) {
+                double currentValue = Double.parseDouble(currentNumber.toString());
+                performOperation(currentValue);
+                DecimalFormat df = new DecimalFormat("#.##"); // Format the result to two decimal places
+                tvResult.setText(df.format(result));
+                currentNumber.setLength(0);
+                currentNumber.append(result);
+                lastOperator = '=';
+                isOperatorClicked = true;
+            }
+        });
+
+        btnClear.setOnClickListener(v -> {
+            currentNumber.setLength(0);
+            result = 0;
+            lastOperator = '=';
+            isOperatorClicked = false;
+            tvResult.setText("");
+        });
+    }
+
+    private void performOperation(double currentValue) {
+        switch (lastOperator) {
+            case '+':
+                result += currentValue;
+                break;
+            case '-':
+                result -= currentValue;
+                break;
+            case '*':
+                result *= currentValue;
+                break;
+            case '/':
+                if (currentValue != 0)
+                    result /= currentValue;
+                break;
+            case '=':
+                result = currentValue;
+                break;
+        }
+    }
+}
+
